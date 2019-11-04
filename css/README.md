@@ -35,3 +35,12 @@
 >> - top: 50%; translateY(-50%) (未知自身高度)
 >> - top: 50%; margin-top: -50px (已知自身高度)
 >> - flex justify-content: center
+## [relative 与 absolute](./position.html)
+> relative（相对定位）:
+>> 如果没有父级，则以body的原点为原点来计算。如果有父级则按照父级的原点来计算原点
+>
+> absolute（绝对定位）:
+>> 如果父级设置了position，则以父级的原点来计算原点。如果父级没有设置position，且设置了top、left等，则按照浏览器(不是body)的原点来计算
+## [CSS制作三角形](./triangle.html)
+> - border 实现
+> - clip-path 实现

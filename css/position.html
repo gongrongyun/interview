@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .container_position {
+            width: 100px;
+            height: 100px;
+            margin: 100px;
+        }
+        .container_nonPosition {
+            width: 100px;
+            height: 100px;
+            margin: 100px;
+            position: relative;
+        }
+        .absolute {
+            width: 100px;
+            height: 100px;
+            background-color: firebrick;
+            position: absolute;
+            top: 0px;
+            left: 0px
+        }
+        .relative {
+            width: 100px;
+            height: 100px;
+            background-color: floralwhite;
+            top: 0px;
+            left: 0px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container_position">
+        <div class="absolute">absolute 父级没有position</div>
+    </div>
+    <div class="container_nonPosition">
+        <div class="absolute">absolute 父级设置position</div>
+    </div>
+    <div class="container_position">
+        <div class="relative">relative 有父级</div>
+    </div>
+    <div class="relative">relative 没有父级</div>
+</body>
+</html>
