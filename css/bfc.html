@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .father {
+            width: 300px;
+            border: 1px solid black;
+            background-color: blanchedalmond;
+            overflow: hidden; 
+            /* 创建BFC */
+        }
+        .son {
+            float: left;
+            width: 100px;
+            height: 100px;
+            background-color: brown;
+        }
+
+        .container {
+            width: 300px;
+            height: 300px;
+            background-color: burlywood;
+        }
+        .left {
+            float: left;
+            width: 100px;
+            height: 100px;
+            background-color: chocolate;
+        }
+        .right {
+            background-color: cornflowerblue;
+            height: 300px;
+            overflow: hidden;
+            /* 创建BFC */
+        }
+
+        .marginContainer {
+            width: 300px;
+            background-color: cyan;
+            overflow: hidden;
+            /* 创建BFC  */
+        }
+        .margin1 {
+            margin: 20px 0;
+            width: 100px;
+            height: 100px;
+            background-color: darkgreen;
+        }
+        .margin2 {
+            margin: 20px 0;
+            width: 100px;
+            height: 100px;
+            background-color: darkseagreen;
+        }
+    </style>
+</head>
+<body>
+    <!-- 浮动元素超出父元素区域 -->
+    <div class="father">
+        这是父元素
+        <div class="son">子元素</div>
+    </div>
+
+    <!-- 清除浮动带来的影响 -->
+    <div class="container">
+        <div class="left">左边</div>
+        <div class="right">右边</div>
+    </div>
+
+    <!-- 两个区域margin重合 -->
+    <div class="marginContainer">
+        <div class="margin1"></div>
+    </div>
+    
+    <div class="margin2"></div>
+</body>
+</html>
