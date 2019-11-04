@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .container {
+            width: 300px;
+            height: 100px;
+            margin: 10px 0;
+            background-color: deeppink;
+        }
+        .item {
+            width: 100px;
+            height: 100px;
+            background-color: dodgerblue;
+        }
+        .flex {
+            display: flex;
+            justify-content: center;
+        }
+        .margin_auto {
+            margin: 0 auto;
+        }
+        .margin_px {
+            margin-left: 100px;
+        }
+        .margin_percentage {
+            margin-left: 50%;
+            transform: translateX(-50%);
+        }
+    </style>
+</head>
+<body>
+    <div class="flex container">
+        <div class="item"></div>
+    </div>
+    <div class="container">
+        <div class="item margin_auto"></div>
+    </div>
+    <div class="container">
+        <div class="item margin_px"></div>
+    </div>
+    <div class="container">
+        <div class="item margin_percentage"></div>
+    </div>
+</body>
+</html>
