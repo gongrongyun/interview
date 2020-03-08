@@ -86,3 +86,13 @@
 > > ```
 > >
 > > 以上就是 `Promise` 的相关方法
+
+## [数组的扁平化](./js/flat.js)
+
+> ### flat 原生方法
+>
+> ### reduce + concat + isArray + 递归
+>
+> ### forEach + isArray + push + 递归
+>
+> ### 使用栈
