@@ -121,3 +121,17 @@
 > > 1. 普通函数会有自己的 `this` ，而箭头函数不会
 > > 2. 箭头函数继承而来的 `this`　永远不会改变，即使调用它的对象发生了改变．
 > > 3. 箭头函数没有 `arguments` 参数，也没有原型 `prototype`
+
+## [原型与原型链](./prototype.js)
+
+> ### 对于原型链要注意以下几条
+> 1. 原型链的尽头是 `Object.prototype` ，所有对象都从 `Object.prototype` 继承属性
+> 2. `Function.prototype` 和 `Function.__proto__` 是统一对象．即 `Object | Array | Number` 等构造函数均继承于 `Function.prototype` ．
+> 3. `Function.prototype` 继承于 `Object.prototype` .
+> 4. `Function.prototype` 是个不同于一般函数（对象）的函数（对象）
+> > - `Function.prototype` 可以像普通函数一样调用，但是总是返回 `undefined` ．
+> > - 普通函数实际上是 `Function.prototype` 的实例，即普通函数继承于 `Function.prototype` ， `fun.__proto__ === Function.prototype` ．
+> > - `Function.prototype` 继承于 `Object.prototype` ，并且没有 `prototype` 属性．`func.prototype` 是普通对象，`Function.prototype.prototype` 是 `null` ．
+> > - 所以 `Function.prototype` 是个特殊的函数，可以独立于／优先于 `Function` 产生
+> 5. `Object` 本身是一个构造函数，是 `Function` 的实例，即 `Object.__proto__ === Function.prototype` ．
+> ### 最后总结：先有 `Object.prototype` ， `Function.prototype` 继承 `Object.prototype` 而产生，最后， `Object` 和 `Function` 和其它构造函数继承 `Function.prototype` 而产生．
