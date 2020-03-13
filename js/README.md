@@ -125,13 +125,43 @@
 ## [原型与原型链](./prototype.js)
 
 > ### 对于原型链要注意以下几条
+>
 > 1. 原型链的尽头是 `Object.prototype` ，所有对象都从 `Object.prototype` 继承属性
 > 2. `Function.prototype` 和 `Function.__proto__` 是统一对象．即 `Object | Array | Number` 等构造函数均继承于 `Function.prototype` ．
 > 3. `Function.prototype` 继承于 `Object.prototype` .
 > 4. `Function.prototype` 是个不同于一般函数（对象）的函数（对象）
-> > - `Function.prototype` 可以像普通函数一样调用，但是总是返回 `undefined` ．
-> > - 普通函数实际上是 `Function.prototype` 的实例，即普通函数继承于 `Function.prototype` ， `fun.__proto__ === Function.prototype` ．
-> > - `Function.prototype` 继承于 `Object.prototype` ，并且没有 `prototype` 属性．`func.prototype` 是普通对象，`Function.prototype.prototype` 是 `null` ．
-> > - 所以 `Function.prototype` 是个特殊的函数，可以独立于／优先于 `Function` 产生
+>    > - `Function.prototype` 可以像普通函数一样调用，但是总是返回 `undefined` ．
+>    > - 普通函数实际上是 `Function.prototype` 的实例，即普通函数继承于 `Function.prototype` ， `fun.__proto__ === Function.prototype` ．
+>    > - `Function.prototype` 继承于 `Object.prototype` ，并且没有 `prototype` 属性．`func.prototype` 是普通对象，`Function.prototype.prototype` 是 `null` ．
+>    > - 所以 `Function.prototype` 是个特殊的函数，可以独立于／优先于 `Function` 产生
 > 5. `Object` 本身是一个构造函数，是 `Function` 的实例，即 `Object.__proto__ === Function.prototype` ．
+>
 > ### 最后总结：先有 `Object.prototype` ， `Function.prototype` 继承 `Object.prototype` 而产生，最后， `Object` 和 `Function` 和其它构造函数继承 `Function.prototype` 而产生．
+
+## 跨域的三种解决方案
+
+> ### jsonp
+>
+> > 利用 `script` 没有跨域限制的特点，在文件中插入 `<script>` 标签，其 `src` 指向后端路由，而后再写一个全局的处理函数，后端会返回一个函数执行的字符串，函数参数即为所需要的数据，返回至前端即会立即执行函数，就达到了跨域的效果．**需要注意的是这种方法只能支持 `get` 方法**
+>
+> ### proxy
+>
+> > 跨域问题由浏览器的同源策略导致，那么另外一个方法就是走代理，通过服务器代理，就可以实现跨域了．也就是说，前端在发送请求的时候，并不是直接发送到目标后端，而是发送到同源的中间服务器，再由中间服务器发送请求到目标后端，再将请求到的数据返回给前端，这样就是代理的整个流程．
+>
+> ### cors
+>
+> > 该方法的全称为＂跨域资源共享＂，是 W3C 的一个标准，需要浏览器与服务端都支持，它要做的仅仅只是在后端响应时在相应头中增加 `Access-Control-Allow-Origin` 字段，当然也可以将其他字段都加上，但是只加这一个字段也能实现跨域．
+>
+> 其余的 `iframe` 方法就不总结了
+
+## [event loop](./eventloop.js)
+
+> ### browser 环境
+>
+> > js 在执行时会先执行主代码块，如果遇到异步操作，则会把异步函数放进任务队列，在主代码块执行完后，就会执行任务队列中的代码，直到任务队列中的任务执行完毕，然后再开启下一次的主代码块的执行，这个就称之为 `event loop` ．在浏览器中的异步函数通常是 `Promise` ．
+>
+> ### node 环境
+>
+> > 在 `node` 环境中，提供了 `setImmediate` 与 `process.nextTick` 两个与任务队列相关的函数，其中 `process.nextTick` 函数会在主代码块执行完且事件循环结束前触发，而 `setImmediate` 函数会在本次时间循环结束，下次 `event loop` 前触发．因 `setTimeout` 与 `setImmediate` 的性质导致直接在主代码块中执行这两个函数的结果并不确定．
+
+## 前端缓存
