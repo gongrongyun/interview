@@ -158,10 +158,21 @@
 
 > ### browser 环境
 >
-> > js 在执行时会先执行主代码块，如果遇到异步操作，则会把异步函数放进任务队列，在主代码块执行完后，就会执行任务队列中的代码，直到任务队列中的任务执行完毕，然后再开启下一次的主代码块的执行，这个就称之为 `event loop` ．在浏览器中的异步函数通常是 `Promise` ．
+> > js 在执行时会先执行主代码块，如果遇到异步操作，则会把异步函数放进任务队列，在主代码块执行完后，就会从任务队列中取出一个任务拿到主线程来执行，直到任务队列中的任务执行完毕。这个就称之为 `event loop` 。而任务又分为宏任务与微任务：
+> > > - 宏任务一般是：script，setTimeout，setInterval，setImmediate
+> > > - 微任务一般是：原生Promise，process.nextTick
 >
 > ### node 环境
 >
 > > 在 `node` 环境中，提供了 `setImmediate` 与 `process.nextTick` 两个与任务队列相关的函数，其中 `process.nextTick` 函数会在主代码块执行完且事件循环结束前触发，而 `setImmediate` 函数会在本次时间循环结束，下次 `event loop` 前触发．因 `setTimeout` 与 `setImmediate` 的性质导致直接在主代码块中执行这两个函数的结果并不确定．
 
 ## 前端缓存
+
+> ### 浏览器请求资源过程如下
+>
+> - `Service Worker`：区别于内存跟硬盘的单独存储空间（`Application->Cache Storage`），并且可自己操控，在发送网络请求时首先会来这里进行查找
+> - `Memory Cache`：当在 `Service Worker` 中没有命中时，会在这里进行查找。`memory cache` 是内存中的存储，但是是个短暂的存储，当浏览器 TAB 关闭时便会失效，**几乎所有资源都**都会进入`memory cache` ，所以如果的确想要不进入`memory cache` 的话可以使用`no-store` 字段
+> - Disk Cache：当在`memory cache`中也没有找到时，会进入`disk cache`查找。`disk cache`是硬盘中的存储，可以长久存储。在这里又分为两种情况：
+>   > - 强制缓存：通过`Cache control`和`Expries`字段来影响强制缓存,使用强制缓存时不会请求服务器，当缓存未失效时状态码为 200，当强制缓存失效时，会进入下面的协商缓存
+>   > - 协商缓存：使用协商缓存时，浏览器会先请求缓存数据库，如果返回状态码为 304 则表示继续使用。通过`Last-Modified & If-Modified-Since`和`Etag & If-None-Match`可影响协商缓存
+> - 网络请求：这是最后一步，也是最为常见的一步，等待网络响应，而后一步一步向上存进相应的存储区域中
