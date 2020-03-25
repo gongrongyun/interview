@@ -14,11 +14,11 @@
 
 > 块级格式上下文
 >
-> > 作用：
+> > 特性：
 > >
-> > - 清除浮动带来的影响
-> > - 两个区域的 margin 重合
-> > - 浮动子元素超出父元素的区域
+> > - BFC 可以包含浮动的元素（清除浮动）
+> > - 同一个 BFC 下外边距会发生重合
+> > - BFC 可以防止元素被浮动元素覆盖
 
 ## 元素选择器
 
@@ -38,7 +38,7 @@
 > 水平居中
 >
 > > - margin: 0 auto
-> > - left: 50%; margin: -(自身宽度)px (已知自身宽度)
+> > - left: 50%; margin-left: -(自身宽度一半)px (已知自身宽度)
 > > - left: 50%; translateX(-50%) (未知自身高度)
 > > - flex: justity-content: center
 >
@@ -46,7 +46,7 @@
 >
 > > - top: 0; bottom: 0; margin-top: -50%; (未知高度)
 > > - top: 50%; translateY(-50%) (未知自身高度)
-> > - top: 50%; margin-top: -50px (已知自身高度)
+> > - top: 50%; margin-top: -(自身高度一半)px (已知自身高度)
 > > - flex justify-content: center
 
 ## [relative 与 absolute](./position.html)

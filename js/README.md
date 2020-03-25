@@ -159,8 +159,9 @@
 > ### browser 环境
 >
 > > js 在执行时会先执行主代码块，如果遇到异步操作，则会把异步函数放进任务队列，在主代码块执行完后，就会从任务队列中取出一个任务拿到主线程来执行，直到任务队列中的任务执行完毕。这个就称之为 `event loop` 。而任务又分为宏任务与微任务：
+> >
 > > > - 宏任务一般是：script，setTimeout，setInterval，setImmediate
-> > > - 微任务一般是：原生Promise，process.nextTick
+> > > - 微任务一般是：原生 Promise，process.nextTick
 >
 > ### node 环境
 >
@@ -176,3 +177,61 @@
 >   > - 强制缓存：通过`Cache control`和`Expries`字段来影响强制缓存,使用强制缓存时不会请求服务器，当缓存未失效时状态码为 200，当强制缓存失效时，会进入下面的协商缓存
 >   > - 协商缓存：使用协商缓存时，浏览器会先请求缓存数据库，如果返回状态码为 304 则表示继续使用。通过`Last-Modified & If-Modified-Since`和`Etag & If-None-Match`可影响协商缓存
 > - 网络请求：这是最后一步，也是最为常见的一步，等待网络响应，而后一步一步向上存进相应的存储区域中
+
+## 隐式类型转换
+
+> ### ToPrimitive
+>
+> > 该方法将对象转化为原始值，并且接收一个类型参数，表明想要转换的类型，改参数有以下三种情况
+> >
+> > - 类型为 Number：首先会调用 `valueOf()` 方法，如果得到的不是原始值，则会继续调用 `toString()` 方法，如果返回值是原始值则返回，否则报错
+> > - 类型为 String：首先会调用 `toString()` 方法，如果的到的不是原始值，则会继续调用 `valueOf()` 方法，如果返回值是原始值则返回，否则报错
+> > - 未指定类型：若接收对象为 `Date` ，那么类型将指定为 `String` ，否则被指定为 `Number`
+>
+> ### valueOf
+>
+> > js 中常见的内置对象有：`Date Array Number Boolean String RegExp Function` 等，对于不同的对象返回的值是不一样的，分以下三种情况：
+> >
+> > - `Number String Boolean` 这三种构造函数产生的对象，通过 `valueOf()` 方法后会返回其原始值
+> > - `Date` 这种特殊对象，会将日期转换为日期的时间戳
+> > - 除以上的都会返回`this`，即对象自身
+>
+> ### toString
+>
+> > 很多对象都封装了自己的`toString()` 方法，例如下面
+> >
+> > ```js
+> > Number.prototype.hasOwnProperty("toString"); // true
+> > Boolean.prototype.hasOwnProperty("toString"); // true
+> > String.prototype.hasOwnProperty("toString"); // true
+> > Array.prototype.hasOwnProperty("toString"); // true
+> > Date.prototype.hasOwnProperty("toString"); // true
+> > RegExp.prototype.hasOwnProperty("toString"); // true
+> > Function.prototype.hasOwnProperty("toString"); // true
+> >
+> > var num = new Number("123sd");
+> > num.toString(); // 'NaN'
+> >
+> > var str = new String("12df");
+> > str.toString(); // '12df'
+> >
+> > var bool = new Boolean("fd");
+> > bool.toString(); // 'true'
+> >
+> > var arr = new Array(1, 2);
+> > arr.toString(); // '1,2'
+> >
+> > var d = new Date();
+> > d.toString(); // "Wed Oct 11 2017 08:00:00 GMT+0800 (中国标准时间)"
+> >
+> > var func = function() {};
+> > func.toString(); // "function () {}"
+> > ```
+> >
+> > 除这些外，其他对象都是返回该对象的类型
+>
+> ### ==运算符
+>
+> > - `null` 与 `udefined` 相等
+> > - 当`String Number Boolean`这三种类型之间相互比较时，若两边类型相同则直接比较，否则全都转换成`Number`进行比较
+> > - 当等号两边一方为`Object`时，则对该对象使用`ToPrimtive`方法再进行比较
