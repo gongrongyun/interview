@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="button" value="submit" />
+    <script>
+      function debounce(fn, delay = 500) {
+        let timer;
+        return function(...args) {
+          if (timer) clearTimeout(timer);
+          timer = setTimeout(() => {
+            fn.apply(this, args);
+          }, delay);
+        };
+      }
+      function change(e) {
+        console.log("debounce");
+      }
+      document.getElementsByTagName("input")[0].onclick = debounce(change);
+    </script>
+  </body>
+</html>

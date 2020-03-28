@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" value="" />
+    <script>
+      function throttle(fn, delay = 1000) {
+        let timer;
+        let time = new Date();
+        return function(...args) {
+          let now = new Date();
+          clearTimeout(timer);
+          if (now - time > delay) {
+            fn.apply(this, args);
+            time = now;
+          } else {
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+            }, delay);
+          }
+        };
+      }
+      function change(e) {
+        console.log(e.target.value);
+      }
+      document.getElementsByTagName("input")[0].oninput = throttle(change);
+    </script>
+  </body>
+</html>
