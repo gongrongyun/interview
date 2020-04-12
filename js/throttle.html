@@ -25,6 +25,7 @@
         };
       }
       function change(e) {
+        console.log(this);
         console.log(e.target.value);
       }
       document.getElementsByTagName("input")[0].oninput = throttle(change);

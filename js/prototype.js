@@ -17,7 +17,7 @@ function createPerson(name, age, job) {
   obj.name = name;
   obj.age = age;
   obj.job = job;
-  obj.sayName() = function() {
+  obj.sayName() = function () {
     console.log(this.name);
   };
   return obj;
@@ -28,7 +28,7 @@ function Person(name, age, job) {
   this.name = name;
   this.age = age;
   this.job = job;
-  this.sayName = function() {
+  this.sayName = function () {
     console.log(this.name);
   };
 }
@@ -39,7 +39,7 @@ function Person() {}
 Person.prototype.name = "Nicholas";
 Person.prototype.age = 29;
 Person.prototype.job = "Teacher";
-Person.prototype.sayName = function() {
+Person.prototype.sayName = function () {
   console.log(this.name);
 };
 
@@ -53,9 +53,9 @@ function Person(name, age, job) {
 
 Person.prototype = {
   constructor: Person,
-  sayName: function() {
+  sayName: function () {
     console.log(this.name);
-  }
+  },
 };
 
 // 5. 动态原型模式
@@ -65,7 +65,7 @@ function Person(name, age, job) {
   this.job = job;
 
   if (typeof this.sayName != "function") {
-    Person.prototype.sayName = function() {
+    Person.prototype.sayName = function () {
       console.log(this.name);
     };
   }
@@ -73,3 +73,14 @@ function Person(name, age, job) {
 
 // 6. 寄生构造模式
 // 7. 稳妥构造函数模式
+
+// 继承(组合寄生式继承)
+function extend(SuperClass, methods) {
+  function SubClass() {
+    SuperClass.call(this);
+  }
+
+  SubClass.prototype = Object.create(SuperClass.prototype, methods);
+  SubClass.prototype.constructor = SubClass;
+  return SubClass;
+}
